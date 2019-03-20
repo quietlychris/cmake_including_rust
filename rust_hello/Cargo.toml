@@ -1,0 +1,12 @@
+[package]
+name = "rust_hello"
+version = "0.1.0"
+authors = ["chrism"]
+edition = "2018"
+
+[build-dependencies]
+cbindgen = "0.6.0"
+
+[lib]
+name = "rust_hello"
+crate-type = ["staticlib","cdylib"]
