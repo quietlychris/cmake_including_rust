@@ -34,11 +34,12 @@ ExternalProject_Add (
 
 add_dependencies(say_hello rust_hello)
 
+# TO_DO: Figure out why `.a` doesn't work, but `.so` does
 # If we use the dynamic '.so' library rather than static '.a', the 'hello_from_rust()' will work
 target_link_libraries(
   say_hello
-  debug "${PROJECT_SOURCE_DIR}/rust_hello/target/debug/librust_hello.a"
-  optimized "${PROJECT_SOURCE_DIR}/rust_hello/target/release/librust_hello.a"
+  debug "${PROJECT_SOURCE_DIR}/rust_hello/target/debug/librust_hello.so"
+  optimized "${PROJECT_SOURCE_DIR}/rust_hello/target/release/librust_hello.so"
 )
 
 set_target_properties(say_hello PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
