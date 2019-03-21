@@ -29,18 +29,17 @@ ExternalProject_Add (
 
 add_dependencies(say_hello rust_hello)
 
-# TO_DO: Figure out why `.a` doesn't work, but `.so` does
-# If we use the dynamic '.so' library rather than static '.a', the 'hello_from_rust()' will work
-target_link_libraries(
+# Since static libraries can't communicate their own dependencies to the linker, we need to
+# specify them explicitly, AFTER the static libraries (here, pthread and dl)
+# We can ask Cargo for a list of the required dependencies by using the command
+# `cargo rustc -- --print native-static-libs`, or by examining the error messages when
+# using the `make` command.
+TARGET_LINK_LIBRARIES(
   say_hello
   debug "${PROJECT_SOURCE_DIR}/rust_hello/target/debug/librust_hello.a"
   optimized "${PROJECT_SOURCE_DIR}/rust_hello/target/release/librust_hello.a"
-)
-
-# Specifying the required linking libraries must come AFTER the static libraries!
-TARGET_LINK_LIBRARIES(say_hello
-   dl
-   pthread
+  dl
+  pthread
 )
 
 set_target_properties(say_hello PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
