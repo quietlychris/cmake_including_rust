@@ -13,7 +13,7 @@ include_directories ("${PROJECT_SOURCE_DIR}/${RUST_DIR}/binding")
 
 SET(SRC src/main.cpp)
 
-ADD_EXECUTABLE(say_hello ${SRC})
+ADD_EXECUTABLE(${PROJ_NAME} ${SRC})
 
 include (ExternalProject)
 set_directory_properties (PROPERTIES EP_PREFIX ${PROJECT_BINARY_DIR}/RUST)
@@ -35,7 +35,7 @@ add_dependencies(${PROJ_NAME} ${RUST_DIR})
 # `cargo rustc -- --print native-static-libs`, or by examining the error messages when
 # using the `make` command.
 TARGET_LINK_LIBRARIES(
-  say_hello
+  ${PROJ_NAME}
   debug "${PROJECT_SOURCE_DIR}/${RUST_DIR}/target/debug/lib${RUST_DIR}.a"
   optimized "${PROJECT_SOURCE_DIR}/${RUST_DIR}/target/release/lib${RUST_DIR}.a"
   dl
